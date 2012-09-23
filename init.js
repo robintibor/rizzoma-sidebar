@@ -1,5 +1,6 @@
 var rizzomaIFrame = document.createElement('iframe');
 rizzomaIFrame.src = 'http://rizzoma.com/topic/?mode=mobile';
+rizzomaIFrame.id = 'rizzomaSidebarIFrame'
 rizzomaIFrame.style.position = 'fixed';
 rizzomaIFrame.style.top = '0px';
 rizzomaIFrame.style.right = '0px';
