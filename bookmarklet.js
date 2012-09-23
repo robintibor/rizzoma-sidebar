@@ -1,0 +1,1 @@
+javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://c9.io/robintibor/rizzomaiframe/workspace/init.js';})();
