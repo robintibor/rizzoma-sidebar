@@ -1,1 +1,1 @@
-javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://c9.io/robintibor/rizzomaiframe/workspace/init.js';})();
+javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://raw.github.com/robintibor/rizzoma-sidebar/master/init.js';})();
