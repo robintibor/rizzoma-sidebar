@@ -1,10 +1,10 @@
 // Called when the url of a tab changes.
-function disableRizzomaSidebar() {
-    chrome.storage.local.set({'rizzomaSidebarEnabled' : false}, null)
+function disableRizzomaSidebar(callback) {
+    chrome.storage.local.set({'rizzomaSidebarEnabled' : false}, callback)
 }
 
-function enableRizzomaSidebar() {
-    chrome.storage.local.set({'rizzomaSidebarEnabled' : true}, null)
+function enableRizzomaSidebar(callback) {
+    chrome.storage.local.set({'rizzomaSidebarEnabled' : true}, callback)
 }
 
 function loadRizzomaSidebar() {
@@ -13,18 +13,17 @@ function loadRizzomaSidebar() {
 }
 
 function removeRizzomaSidebar() {
-    
+    sidebarIFrame = document.getElementById('rizzomaSidebarIFrame');
+    sidebarIFrame.parent.removeChildren(sidebarIFrame);
 }
 
 function toggleRizzomaSidebar(rizzomaSidebarEnabledObj) {
     var rizzomaSidebarEnabled = rizzomaSidebarEnabledObj.rizzomaSidebarEnabled
     if (rizzomaSidebarEnabled === true) {
-        disableRizzomaSidebar()
-        removeRizzomaSidebar()
+        disableRizzomaSidebar(removeRizzomaSidebar)
     }
     else {
-        enableRizzomaSidebar()
-        loadRizzomaSidebar()
+        enableRizzomaSidebar(loadRizzomaSidebar)
     }
   // If the letter 'g' is found in the tab's URL...
 }

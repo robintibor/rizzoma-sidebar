@@ -4,9 +4,10 @@
   "manifest_version": 2,
   "description": "Have Rizzoma in a sidebar-iframe, remembers which topic you had open last :)",
   "browser_action": {
-    "default_icon": "icon.png"
+    "default_icon": "icon.png"//,
+    //"default_popup": "rizzoma.html"
   }, 
-  "background": { "scripts": ["toggle-sidebar.js"] },
+  "background": {"page": "rizzoma-background.html"} ,//"scripts": ["toggle-sidebar.js"] 
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
