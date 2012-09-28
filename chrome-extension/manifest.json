@@ -7,11 +7,11 @@
     "default_icon": "icon.png"//,
     //"default_popup": "rizzoma.html"
   }, 
-  "background": {"page": "rizzoma-background.html"} ,//"scripts": ["toggle-sidebar.js"] 
+  "background": {"page": "rizzoma-background.html"} ,//"scripts": ["js/toggle-sidebar.js"] 
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["load-sidebar.js"]
+      "js": ["js/load-sidebar.js"]
     }
   ],
   "permissions": [
