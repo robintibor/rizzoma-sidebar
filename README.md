@@ -1,2 +1,1 @@
-# change icon to rizzoma
-# move files into chrome extension folder
+TODO: change icon to rizzoma

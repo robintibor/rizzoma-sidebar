@@ -1,16 +1,17 @@
-# Called when the url of a tab changes.
-disableRizzomaSidebar = (tabId) ->
-    localStorage["sidebarEnabled:tab#{tabId}"] = 'false'
+# Listen to brower action icon click :)
+chrome.browserAction.onClicked.addListener( ->
+        getSidebarStatus(toggleRizzomaSidebar)
+)
 
-enableRizzomaSidebar = (tabId) ->
-    localStorage["sidebarEnabled:tab#{tabId}"] = 'true'
+getSidebarStatus = (callback) ->
+    chrome.tabs.getSelected((tab) -> getSidebarStatusForTab(tab, callback))
 
-loadRizzomaSidebar = ->
-    chrome.tabs.executeScript(null, {file: "js/load-sidebar.js"})
-
-removeRizzomaSidebar = ->
-    sidebarIFrame = document.getElementById('rizzomaSidebarIFrame');
-    sidebarIFrame.parent.removeChildren(sidebarIFrame);
+getSidebarStatusForTab = (tab, callback) ->
+    tabId = tab.id
+    if (localStorage["sidebarEnabled:tab#{tabId}"] == 'true')
+        callback(true, tabId)
+    else
+        callback(false, tabId)
 
 toggleRizzomaSidebar = (rizzomaSidebarEnabled, tabId) ->
     if (rizzomaSidebarEnabled == true)
@@ -20,16 +21,17 @@ toggleRizzomaSidebar = (rizzomaSidebarEnabled, tabId) ->
         enableRizzomaSidebar(tabId)
         loadRizzomaSidebar()
 
-getSidebarStatusForTab = (tab, callback) ->
-    tabId = tab.id
-    if (localStorage["sidebarEnabled:tab#{tabId}"] == 'true')
-        callback(true, tabId)
-    else
-        callback(false, tabId)
+enableRizzomaSidebar = (tabId) ->
+    localStorage["sidebarEnabled:tab#{tabId}"] = 'true'
 
-getSidebarStatus = (callback) ->
-    chrome.tabs.getSelected((tab) -> getSidebarStatusForTab(tab, callback))
+loadRizzomaSidebar = ->
+    chrome.tabs.executeScript(null, {file: "js/load-sidebar.js"})
 
-chrome.browserAction.onClicked.addListener( ->
-        getSidebarStatus(toggleRizzomaSidebar)
-)
+disableRizzomaSidebar = (tabId) ->
+    localStorage["sidebarEnabled:tab#{tabId}"] = 'false'
+
+removeRizzomaSidebar = ->
+    chrome.tabs.executeScript(null, {file: "js/remove-sidebar.js"})
+
+
+

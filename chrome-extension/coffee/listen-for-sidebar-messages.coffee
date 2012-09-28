@@ -1,6 +1,5 @@
 chrome.extension.onMessage.addListener((messageString, sender, sendResponse) ->
-    sendResponse({farewell: "goodbye"})
-    #handleMessage(messageString, sender, sendResponse)
+    handleMessage(messageString, sender, sendResponse)
 )
 
 handleMessage = (messageString, sender, sendResponse) ->
@@ -8,4 +7,4 @@ handleMessage = (messageString, sender, sendResponse) ->
         console.log("asking if sidebar is enabled!", sender)
         tabId = sender.tab.id
         sidebarEnabled = localStorage["sidebarEnabled:tab#{tabId}"] == 'true'
-        sendResponse('hallo')
+        sendResponse(sidebarEnabled)
