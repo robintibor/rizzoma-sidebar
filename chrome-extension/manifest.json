@@ -10,7 +10,12 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/load-sidebar-if-enabled.js"]
+      "js": ["js/current-page/load-sidebar-if-enabled.js"]
+    },
+    {
+      "matches": ["http://rizzoma.com/*", "https://rizzoma.com/*"],
+      "js": ["js/rizzoma-iframe/remember-last-url.js"],
+      "all_frames" : true
     }
   ],
   "permissions": [
