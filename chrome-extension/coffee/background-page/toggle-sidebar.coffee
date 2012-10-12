@@ -8,7 +8,7 @@ getSidebarStatus = (callback) ->
 
 getSidebarStatusForTab = (tab, callback) ->
     tabId = tab.id
-    if (sessionStorage["sidebarEnabled:tab#{tabId}"] == 'true')
+    if (sessionStorage["sidebar.tab[#{tabId}].enabled"] == 'true')
         callback(true, tabId)
     else
         callback(false, tabId)
@@ -22,13 +22,13 @@ toggleRizzomaSidebar = (rizzomaSidebarEnabled, tabId) ->
         loadRizzomaSidebar()
 
 enableRizzomaSidebar = (tabId) ->
-    sessionStorage["sidebarEnabled:tab#{tabId}"] = 'true'
+    sessionStorage["sidebar.tab[#{tabId}].enabled"] = 'true'
 
 loadRizzomaSidebar = ->
-    chrome.tabs.executeScript(null, {file: "js/load-sidebar.js"})
+    chrome.tabs.executeScript(null, {file: "js/current-page/load-sidebar-if-enabled.js"})
 
 disableRizzomaSidebar = (tabId) ->
-    sessionStorage["sidebarEnabled:tab#{tabId}"] = 'false'
+    sessionStorage["sidebar.tab[#{tabId}].enabled"] = 'false'
 
 removeRizzomaSidebar = ->
     chrome.tabs.executeScript(null, {file: "js/remove-sidebar.js"})

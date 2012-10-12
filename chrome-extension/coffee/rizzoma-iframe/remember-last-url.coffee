@@ -6,7 +6,7 @@ checkThatYouAreTheSidebar = ->
     
 rememberLastUrlOnChange = ->
     window.onbeforeunload = () ->
-        sessionStorage['lastURL'] = window.location.href + '?mode=mobile'
+        chrome.extension.sendMessage("CURRENT_URL: #{window.location.href}?mode=mobile")
         return undefined
 
 if (checkThatYouAreTheSidebar())

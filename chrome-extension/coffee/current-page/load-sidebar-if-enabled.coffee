@@ -1,13 +1,27 @@
-loadRizzomaSidebar= () ->
-    document.body.appendChild(document.createElement('script')).src='https://raw.github.com/robintibor/rizzoma-sidebar/master/init.js';
+getHighestZIndex = ->
+    allElements = document.getElementsByTagName("*")
+    maxZIndex = 0
+    for element in allElements
+         zIndex = parseInt(element.style.zIndex)
+         if (zIndex > maxZIndex)
+            maxZIndex = zIndex
+    return maxZIndex
 
-chrome.extension.onMessage.addListener((messageString, sender) ->
-    alert("got message" + messageString);
-    console.log("got message:", messageString)
-)
+loadRizzomaSidebar= () ->
+    rizzomaIFrame = document.createElement('iframe')
+    rizzomaIFrame.src = 'http://rizzoma.com/topic/?mode=mobile'
+    rizzomaIFrame.id = 'rizzomaSidebarIFrame'
+    rizzomaIFrame.style.position = 'fixed'
+    rizzomaIFrame.style.top = '0px'
+    rizzomaIFrame.style.right = '0px'
+    rizzomaIFrame.style.height = '100%'
+    rizzomaIFrame.style.width = '35%'
+    rizzomaIFrame.style.zIndex = getHighestZIndex()
+    document.body.appendChild(rizzomaIFrame)
 
 chrome.extension.sendMessage('IS_SIDEBAR_ENABLED_FOR_THIS_TAB',
     (isSidebarEnabled) ->
+        console.log("sidebar is enabled: #{isSidebarEnabled}")
         if (isSidebarEnabled)
             loadRizzomaSidebar()
 )
