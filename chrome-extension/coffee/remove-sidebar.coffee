@@ -1,2 +1,2 @@
 sidebarIFrame = document.getElementById('rizzomaSidebarIFrame')
-sidebarIFrame.parentNode.removeChild(sidebarIFrame)
+sidebarIFrame.style.display = 'none'
