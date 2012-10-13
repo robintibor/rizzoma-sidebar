@@ -1,0 +1,21 @@
+#rizzomaSidebar {
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: 35%;
+    height: 100%;
+    z-index: 2147483647
+}
+
+#rizzomaSidebarIFrame {
+    height: 100%;
+    width: 95%;
+    float: right;
+}
+
+#rizzomaSidebarToggle{
+    width: 4%;
+    height: 100%;
+    float: right;
+    background-color: grey;
+}
