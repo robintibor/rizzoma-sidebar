@@ -56,10 +56,10 @@ resizePDFForSidebar = ->
 
 getURLAndLoadSidebar = ->
     chrome.extension.sendMessage('GET_CURRENT_SIDEBAR_URL',
-        (url) -> 
-            if (not url?)
-                url = 'https://rizzoma.com/topic/?mode=mobile'
-            loadRizzomaSidebar(url)
+        (sidebarURL) -> 
+            if (not sidebarURL?)
+                sidebarURL = 'https://rizzoma.com/topic/'
+            loadRizzomaSidebar(sidebarURL)
     )
 
 if (sidebarAlreadyPresentOnPage())

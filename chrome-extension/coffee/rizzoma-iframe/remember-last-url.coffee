@@ -9,7 +9,7 @@ updateURLIfChanged = ->
         sendCurrentMobileURLToExtension()
 
 sendCurrentMobileURLToExtension = ->
-    chrome.extension.sendMessage("CURRENT_URL: #{window.location.href}?mode=mobile")
+    chrome.extension.sendMessage("CURRENT_URL: #{window.location.href}")
 
 rememberLastUrlOnChange = ->
     setInterval(updateURLIfChanged, 100)

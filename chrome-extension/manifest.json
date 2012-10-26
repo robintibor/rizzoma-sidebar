@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["http://rizzoma.com/*", "https://rizzoma.com/*"],
-      "js": ["js/rizzoma-iframe/remember-last-url.js"],
+      "js": ["js/lib/jquery-1.8.2.js", "js/rizzoma-iframe/remember-last-url.js", "js/rizzoma-iframe/style-desktop-iframe.js"],
       "all_frames" : true
     }
   ],
