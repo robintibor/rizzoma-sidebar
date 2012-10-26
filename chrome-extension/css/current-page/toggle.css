@@ -13,9 +13,22 @@
     float: right;
 }
 
-#rizzomaSidebarToggle{
+.rizzomaSidebarToggle{
+    background-color: #00B7BA;
+}
+
+.rizzomaSidebarToggleClose{
     width: 4%;
     height: 100%;
     float: right;
-    background-color: #00B7BA;
+}
+
+.rizzomaSidebarToggleOpen{
+    display:none;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: 1.4%;
+    height: 100%;
+    z-index: 2147483647
 }
