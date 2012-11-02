@@ -1,6 +1,6 @@
 {
   "name": "Rizzoma Sidebar Desktop Version",
-  "version": "0.12",
+  "version": "0.13",
   "manifest_version": 2,
   "description": "Have Rizzoma in a sidebar-iframe, remembers which topic you had open last :) (using Rizzoma Desktop Version)",
   "browser_action": {
@@ -17,7 +17,7 @@
     }
   ],
   "web_accessible_resources": [
-    "css/current-page/rizzomaIFrame.css"  
+    "css/current-page/rizzoma-i-frame.css"  
   ],
   "permissions": [
     "storage",

@@ -6,7 +6,6 @@ applyStylesToMakeRizzomaFitIntoSidebar = ->
     appendCSSToFitIntoSidebar()
 
 minimizeTopicListIfOpen = ->
-    console.log("checking topic list");
     if (topicListExists())
         minimizeTopicList()
     else
@@ -21,9 +20,8 @@ minimizeTopicList = ->
 
 appendCSSToFitIntoSidebar = ->
     # apply local css file from extension!
-    cssLocation = chrome.extension.getURL('css/current-page/rizzomaIFrame.css')
+    cssLocation = chrome.extension.getURL('css/current-page/rizzoma-i-frame.css')
     $('head').append("<link rel='stylesheet' href='#{cssLocation}' type='text/css' />")
         
-console.log("URL!!:", chrome.extension.getURL('ohyes.png'))
 if (checkThatYouAreTheSidebar())
     applyStylesToMakeRizzomaFitIntoSidebar()
