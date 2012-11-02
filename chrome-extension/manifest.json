@@ -1,6 +1,6 @@
 {
   "name": "Rizzoma Sidebar Desktop Version",
-  "version": "0.13",
+  "version": "0.14",
   "manifest_version": 2,
   "description": "Have Rizzoma in a sidebar-iframe, remembers which topic you had open last :) (using Rizzoma Desktop Version)",
   "browser_action": {
