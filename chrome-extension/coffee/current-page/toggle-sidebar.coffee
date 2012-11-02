@@ -46,9 +46,9 @@ weAreLookingAtPdf = ->
 
 resizePDFForSidebar = ->
     sidebarExists = $('#rizzomaSidebarIFrame').length == 1
-    sidebarVisible = $('#rizzomaSidebarIFrame').css('display') == 'block'
+    sidebarVisible = $('#rizzomaSidebar').css('display') == 'block'
     if (sidebarExists and sidebarVisible)
-        $('body').css('width', '64%')
+        $('body').css('width', '54%')
     else if (sidebarExists)
         $('body').css('width', '98%')
     else

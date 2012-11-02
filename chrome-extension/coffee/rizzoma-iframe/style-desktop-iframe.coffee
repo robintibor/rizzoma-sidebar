@@ -3,20 +3,27 @@ checkThatYouAreTheSidebar = ->
 
 applyStylesToMakeRizzomaFitIntoSidebar = ->
     minimizeTopicListIfOpen()
-    shrinkEditorSizeOnceEditorLoaded()
+    appendCSSToFitIntoSidebar()
 
 minimizeTopicListIfOpen = ->
-    $(document).ready( ->
-        $('.js-topics.active').click()
-    )
-
-shrinkEditorSizeOnceEditorLoaded = ->
-    if ($('.js-wave-blips').length > 0)
-        $('.js-wave-blips').width('440px')
+    console.log("checking topic list");
+    if (topicListExists())
+        minimizeTopicList()
     else
-        setTimeout(shrinkEditorSizeOnceEditorLoaded, 50)
-        
-    
+        setTimeout(minimizeTopicListIfOpen, 50)
 
+topicListExists = ->
+    return $('.js-topics.active').length > 0
+
+minimizeTopicList = ->
+    # click on topic list to minimize it!
+    $('.js-topics.active').click()
+
+appendCSSToFitIntoSidebar = ->
+    # apply local css file from extension!
+    cssLocation = chrome.extension.getURL('css/current-page/rizzomaIFrame.css')
+    $('head').append("<link rel='stylesheet' href='#{cssLocation}' type='text/css' />")
+        
+console.log("URL!!:", chrome.extension.getURL('ohyes.png'))
 if (checkThatYouAreTheSidebar())
     applyStylesToMakeRizzomaFitIntoSidebar()
