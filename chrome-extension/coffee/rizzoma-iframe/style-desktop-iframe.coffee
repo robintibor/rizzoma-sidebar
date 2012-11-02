@@ -3,6 +3,7 @@ checkThatYouAreTheSidebar = ->
 
 applyStylesToMakeRizzomaFitIntoSidebar = ->
     minimizeTopicListIfOpen()
+    minimizeTopicListOnClickOfTopic()
     appendCSSToFitIntoSidebar()
 
 minimizeTopicListIfOpen = ->
@@ -10,6 +11,11 @@ minimizeTopicListIfOpen = ->
         minimizeTopicList()
     else
         setTimeout(minimizeTopicListIfOpen, 50)
+
+minimizeTopicListOnClickOfTopic = () ->
+    $(document).on('click', 'a.js-search-result', () ->
+        $('.js-topics.active').click()
+    )
 
 topicListExists = ->
     return $('.js-topics.active').length > 0
