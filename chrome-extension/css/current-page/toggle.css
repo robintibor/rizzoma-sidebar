@@ -14,12 +14,14 @@
 }
 
 .rizzomaSidebarToggle{
+    cursor: pointer;
     background-color: #00B7BA;
+    z-index: 2147483647;
+    width: 16px;
+    height: 100%;
 }
 
 .rizzomaSidebarToggleClose{
-    width: 4%;
-    height: 100%;
     float: right;
 }
 
@@ -28,7 +30,4 @@
     position: fixed;
     right: 0px;
     top: 0px;
-    width: 1.4%;
-    height: 100%;
-    z-index: 2147483647
 }
