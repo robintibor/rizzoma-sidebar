@@ -1,39 +1,58 @@
 # Listen to brower action icon click :)
+lastActiveTabId = null
+
 chrome.browserAction.onClicked.addListener( ->
     toggleSidebarInCurrentTab()
 )
 
 toggleSidebarInCurrentTab = ->
-    getActiveTabId((tabId) ->
-        askIfSideBarIsOpen(tabId, removeShowOrLoadSidebar)
-    )
+    getSidebarStatus(removeShowOrLoadSidebar)
 
+getSidebarStatus = (callback) ->
+    getActiveTabId((tabId) ->
+        askIfSideBarIsOpen(tabId, callback)
+    )
+        
 getActiveTabId = (callback) ->
     chrome.tabs.query(
         {
             active: true,
             currentWindow:true
+            url: "*://*/*"
         },
         (selectedTabs) ->
-            callback(selectedTabs[0].id)
+            if (selectedTabs.length > 0)
+                callback(selectedTabs[0].id)
+            else
+                callback(null)
     )
-            
 
 askIfSideBarIsOpen = (tabId, callback) ->
-    chrome.tabs.sendMessage(tabId, "IS_SIDEBAR_OPEN?",
-        (sidebarState) ->
-            callback(sidebarState)
-    )
+    if (tabId?)
+        chrome.tabs.sendMessage(tabId, "IS_SIDEBAR_OPEN?",
+            (sidebarState) ->
+                callback(sidebarState)
+        )
+    else
+        callback({noSiteForSidebar: true})
 
 removeShowOrLoadSidebar = (sidebarState) ->
-    if (sidebarState.visible)
-        console.log("sidebar visible")
+    if (sidebarState.noSiteForSidebar?)
+        return
+    else if (sidebarState.visible)
         removeSidebar()
     else if (sidebarState.inserted)
-        console.log("sidebar inserted")
+        showSidebar()
     else
-        loadSidebar()
-        console.log("sidebar not inserted")
+        insertingSidebarDirectly()
+
+insertingSidebarDirectly = ->
+    chrome.tabs.executeScript(null, { code: "insertingInvisibleSidebar = false" }, () ->
+        chrome.tabs.insertCSS(null, { code: "#rizzomaSidebar { display: block;}" },
+            loadSidebar
+        )
+    )
+    
 
 loadSidebar = ->
     # first load jquery, then own script...
@@ -43,6 +62,9 @@ loadSidebar = ->
         )
     )
 
+showSidebar = ->
+    chrome.tabs.insertCSS(null, { code: "#rizzomaSidebar { display: block;}" })
+
 removeSidebar =->
     chrome.tabs.executeScript(null, { file: "js/lib/jquery-1.8.2.js" }, () -> 
         chrome.tabs.executeScript(null, { file: "js/current-page/remove-sidebar.js" }
@@ -51,18 +73,42 @@ removeSidebar =->
 
 chrome.tabs.onUpdated.addListener(
     (tabId, changeInfo, tab) ->
-        if (tab.active)
-            insertInvisibleSidebar()
-       # console.log("updated tab #{tabId}", tab, changeInfo)
-    #    console.log("active: #{tab.active}")
-);
+        if (tab.active and changeInfo.status == 'complete')
+            insertSidebarIfNotPresent()
+)
 
+insertSidebarIfNotPresent = ->
+    getSidebarStatus(checkIfSidebarShouldBePreloaded)
+
+checkIfSidebarShouldBePreloaded = (sidebarStatus) ->
+    if (not sidebarStatus.inserted)
+        insertInvisibleSidebar()
+    
 insertInvisibleSidebar = () ->
-    console.log("inserting invisible sidebar")
-    loadSidebar()
-    """
-    chrome.tabs.insertCSS(null, { code: "body { background-color: yellow;}" }, 
-        () ->
-            loadSidebar()
-    )"""
+    chrome.tabs.insertCSS(null, { code: "#rizzomaSidebar { display: none;}" }, () ->
+        chrome.tabs.executeScript(null, { code: "insertingInvisibleSidebar = true" },
+            loadSidebar
+        )
+    )
 
+chrome.tabs.onActivated.addListener(
+    (tabInfo) ->
+        insertSidebarIfNotPresent()
+        removeInvisibleSidebarFromLastActiveTab(tabInfo.tabId)
+        lastActiveTabId = tabInfo.tabId
+)
+
+removeInvisibleSidebarFromLastActiveTab = (activeTabId) ->
+    previousTabBecameInactive = (lastActiveTabId != null and lastActiveTabId != activeTabId)
+    if (previousTabBecameInactive)
+        removeInvisibleSidebarFromTab(lastActiveTabId)
+
+removeInvisibleSidebarFromTab = (tabId) ->
+   chrome.tabs.executeScript(tabId, { file: "js/lib/jquery-1.8.2.js" }, () -> 
+        chrome.tabs.executeScript(tabId, { code: 
+            "insertingInvisibleSidebar = false;
+            if (!$('#rizzomaSidebar, #rizzomaSidebarMaximizer').is(':visible')) {
+                 $('#rizzomaSidebar, #rizzomaSidebarMaximizer').remove();}" }
+        )
+    )
+    

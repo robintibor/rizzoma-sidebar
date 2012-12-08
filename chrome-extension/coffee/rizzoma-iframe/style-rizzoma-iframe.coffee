@@ -7,7 +7,7 @@ applyStylesToMakeRizzomaFitIntoSidebar = ->
     appendCSSToFitIntoSidebar()
 
 minimizeTopicListIfOpen = ->
-    if (topicListExists())
+    if (topicTabExists())
         minimizeTopicList()
     else
         setTimeout(minimizeTopicListIfOpen, 50)
@@ -17,8 +17,8 @@ minimizeTopicListOnClickOfTopic = () ->
         $('.js-topics.active').click()
     )
 
-topicListExists = ->
-    return $('.js-topics.active').length > 0
+topicTabExists = ->
+    return $('.js-topics.tab').length > 0
 
 minimizeTopicList = ->
     # click on topic list to minimize it!

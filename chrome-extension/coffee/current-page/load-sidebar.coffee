@@ -11,13 +11,15 @@ getURLAndLoadSidebar = ->
     )
 
 loadRizzomaSidebar= (url) ->
+    if (sidebarAlreadyPresentOnPage())
+        return
     addSidebarToPage(url)
     toggleSidebarOnClick()
     resizePDFIfWeAreLookingAtPDF()
 
 addSidebarToPage = (url) ->
     rizzomaSidebarDiv = $("
-        <div class='rizzomaSidebarToggle rizzomaSidebarToggleOpen'> </div>
+        <div id='rizzomaSidebarMaximizer' class='rizzomaSidebarToggle rizzomaSidebarToggleOpen'> </div>
         <div id='rizzomaSidebar'>
         <iframe src='#{url}' id='rizzomaSidebarIFrame'> </iframe>
         <div class='rizzomaSidebarToggle rizzomaSidebarToggleClose'> </div>
@@ -58,5 +60,26 @@ resizePDFForSidebar = ->
     else
         $('body').css('width', '100%')
 
+lastUserActivity = -1
+
+loadSidebarAfterTimeWithoutUserActivity = ->
+    $(document).on('scroll.rizzomasidebar mousedown.rizzomasidebar keypress.rizzomasidebar', 
+        () ->
+            lastUserActivity = Date.now()
+    )
+    setTimeout(loadSidebarIfNoScrollHappened, 4000)
+
+loadSidebarIfNoScrollHappened = ->
+    milliSecSinceLastUserActivity = (Date.now() - lastUserActivity) 
+    if (milliSecSinceLastUserActivity > 4000)
+        $(document).off('.rizzomasidebar')
+        if (insertingInvisibleSidebar) # could be turned off from outside :)
+            getURLAndLoadSidebar()
+    else
+        setTimeout(loadSidebarIfNoScrollHappened, 400 - milliSecSinceLastUserActivity)
+
 if (not sidebarAlreadyPresentOnPage())
-    getURLAndLoadSidebar()
+    if (insertingInvisibleSidebar? and insertingInvisibleSidebar == true) # this variable is set to true from outside, from extension-setup.coffee :)
+        loadSidebarAfterTimeWithoutUserActivity()
+    else
+        getURLAndLoadSidebar()

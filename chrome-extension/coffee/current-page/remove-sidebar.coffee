@@ -1,5 +1,6 @@
 removeSidebar = -> 
     $('#rizzomaSidebar').remove()
+    $('#rizzomaSidebarMaximizer').remove()
     resizePDFIfWeAreLookingAtPDF()
 
 resizePDFIfWeAreLookingAtPDF = ->
