@@ -1,9 +1,19 @@
 # Listen to brower action icon click :)
 lastActiveTabId = null
+lastTimeOfIconClick = 0
 
 chrome.browserAction.onClicked.addListener( ->
+    rememberThatUserClickedIcon()
     toggleSidebarInCurrentTab()
 )
+
+rememberThatUserClickedIcon = ->
+    if (userClickedIconFirstTime())
+        setUpHandlersForInsertingInvisibleSidebar()
+    lastTimeOfIconClick = Date.now()
+
+userClickedIconFirstTime = ->
+    return lastTimeOfIconClick == 0
 
 toggleSidebarInCurrentTab = ->
     getSidebarStatus(removeShowOrLoadSidebar)
@@ -71,11 +81,20 @@ removeSidebar =->
         )
     )
 
-chrome.tabs.onUpdated.addListener(
-    (tabId, changeInfo, tab) ->
-        if (tab.active and changeInfo.status == 'complete')
-            insertSidebarIfNotPresent()
-)
+setUpHandlersForInsertingInvisibleSidebar = ->
+    setUpHandlerWhenCurrentTabIsUpdated()
+    setUpHandlerWhenNewTabIsActivated()
+
+setUpHandlerWhenCurrentTabIsUpdated = ->
+  chrome.tabs.onUpdated.addListener(
+        (tabId, changeInfo, tab) ->
+            if (userHasClickedIconRecently() and tab.active and changeInfo.status == 'complete')
+                insertSidebarIfNotPresent()
+    )
+
+userHasClickedIconRecently = ->
+    minutesSinceLastIconClick = (Date.now() - lastTimeOfIconClick) / (60 * 1000)
+    return minutesSinceLastIconClick < 10
 
 insertSidebarIfNotPresent = ->
     getSidebarStatus(checkIfSidebarShouldBePreloaded)
@@ -91,12 +110,14 @@ insertInvisibleSidebar = () ->
         )
     )
 
-chrome.tabs.onActivated.addListener(
-    (tabInfo) ->
-        insertSidebarIfNotPresent()
-        removeInvisibleSidebarFromLastActiveTab(tabInfo.tabId)
-        lastActiveTabId = tabInfo.tabId
-)
+setUpHandlerWhenNewTabIsActivated = ->
+    chrome.tabs.onActivated.addListener(
+        (tabInfo) ->
+            if (userHasClickedIconRecently())
+                insertSidebarIfNotPresent()
+                removeInvisibleSidebarFromLastActiveTab(tabInfo.tabId)
+                lastActiveTabId = tabInfo.tabId
+    )
 
 removeInvisibleSidebarFromLastActiveTab = (activeTabId) ->
     previousTabBecameInactive = (lastActiveTabId != null and lastActiveTabId != activeTabId)
