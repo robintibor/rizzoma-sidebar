@@ -1,8 +1,8 @@
 {
-  "name": "Rizzoma Sidebar Desktop Version",
-  "version": "0.14",
+  "name": "Rizzoma Research Sidebar",
+  "version": "0.17",
   "manifest_version": 2,
-  "description": "Have Rizzoma in a sidebar-iframe, remembers which topic you had open last :) (using Rizzoma Desktop Version)",
+  "description": "Write down immediately what matters to you while you're reading on the net. Easily organize and improve your findings with others.",
   "browser_action": {
     "default_icon": "rizzoma.png"
   }, 
