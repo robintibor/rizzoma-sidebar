@@ -1,6 +1,6 @@
 {
   "name": "Rizzoma Research Sidebar",
-  "version": "0.17",
+  "version": "0.171",
   "manifest_version": 2,
   "description": "Write down immediately what matters to you while you're reading on the net. Easily organize and improve your findings with others.",
   "browser_action": {
@@ -23,5 +23,6 @@
     "storage",
     "tabs",
     "<all_urls>"
-  ]
+  ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

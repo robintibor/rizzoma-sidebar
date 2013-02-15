@@ -15,22 +15,22 @@ addSidebarToPage = (url) ->
     rizzomaSidebarDiv = $("
         <div class='rizzomaSidebarToggle rizzomaSidebarToggleOpen'> </div>
         <div id='rizzomaSidebar'>
-            <iframe src='#{url}' id='rizzomaSidebarIFrame'> </iframe>
+            <!-- add ?from=sidebar_extension for google analytics -->
+            <iframe src='#{url}?from=sidebar_extension' id='rizzomaSidebarIFrame'> </iframe>
             <div class='rizzomaSidebarToggle rizzomaSidebarToggleClose'> </div>
         </div>
-        <!-- google analytics script!! :)) -->
+        <!-- google analytics script below (not visible in inspect elements from chrome, just in toggle-sidebar.coffee!! :)) -->
         <script type='text/javascript'>
               var _gaq = _gaq || [];
               _gaq.push(['_setAccount', 'UA-22635528-7']);
-              _gaq.push(['_trackPageview']);
+              _gaq.push(['_trackPageview', '/sidebar_extension/sidebar_iframe.html']);
             
               (function() {
                 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
               })();
-            
-            </script>
+        </script>
     ")
     $('body').append(rizzomaSidebarDiv)
     

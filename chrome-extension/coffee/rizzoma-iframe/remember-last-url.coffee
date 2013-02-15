@@ -6,15 +6,15 @@ checkThatYouAreTheSidebar = ->
 updateURLIfChanged = ->
     if (lastURL != window.location.href)
         lastURL = window.location.href
-        sendCurrentMobileURLToExtension()
+        sendCurrentURLToExtension()
 
-sendCurrentMobileURLToExtension = ->
+sendCurrentURLToExtension = ->
     chrome.extension.sendMessage("CURRENT_URL: #{window.location.href}")
 
 rememberLastUrlOnChange = ->
     setInterval(updateURLIfChanged, 100)
     window.onbeforeunload = () ->
-        sendCurrentMobileURLToExtension()
+        sendCurrentURLToExtension()
         return undefined
 
 if (checkThatYouAreTheSidebar())
