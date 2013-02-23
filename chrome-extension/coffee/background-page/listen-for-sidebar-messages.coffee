@@ -8,6 +8,8 @@ handleMessage = (messageString, sender, sendResponse) ->
         handleNewURL(URL)
     else if (messageString == 'GET_CURRENT_SIDEBAR_URL')
         handleGetCurrentSidebarURL(sendResponse)
+    else if (messageString == "TRACK_SIDEBAR_PAGEVIEW")
+        trackPageViewFromSidebarIFrame()
 
 handleNewURL = (url) ->
     sessionStorage["sidebar.lastUrl"] = url
@@ -15,3 +17,8 @@ handleNewURL = (url) ->
 handleGetCurrentSidebarURL = (sendResponseFunction) ->
     url = sessionStorage["sidebar.lastUrl"]
     sendResponseFunction(url)
+
+trackPageViewFromSidebarIFrame = ->
+    # this should work since google analytics already included by background page 
+    # (even with correct Account ID)...
+    _gaq.push(['_trackPageview', '/sidebar_extension/sidebar_iframe.html'])

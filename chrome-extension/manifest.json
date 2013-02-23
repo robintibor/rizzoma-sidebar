@@ -1,6 +1,6 @@
 {
   "name": "Rizzoma Research Sidebar",
-  "version": "0.171",
+  "version": "0.172",
   "manifest_version": 2,
   "description": "Write down immediately what matters to you while you're reading on the net. Easily organize and improve your findings with others.",
   "browser_action": {
@@ -12,7 +12,8 @@
       "matches": ["http://rizzoma.com/*", "https://rizzoma.com/*"],
       "js": ["js/lib/jquery-1.8.2.js",
         "js/rizzoma-iframe/remember-last-url.js",
-        "js/rizzoma-iframe/style-desktop-iframe.js"],
+        "js/rizzoma-iframe/style-desktop-iframe.js",
+        "js/rizzoma-iframe/google-analytics-track-pageview.js"],
       "all_frames" : true
     }
   ],
