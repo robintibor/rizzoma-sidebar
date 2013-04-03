@@ -1,6 +1,6 @@
 {
   "name": "Rizzoma Research Sidebar",
-  "version": "0.172",
+  "version": "0.173",
   "manifest_version": 2,
   "description": "Write down immediately what matters to you while you're reading on the net. Easily organize and improve your findings with others.",
   "browser_action": {
