@@ -4,9 +4,9 @@
   "manifest_version": 2,
   "description": "Write down immediately what matters to you while you're reading on the net. Easily organize and improve your findings with others.",
   "browser_action": {
-    "default_icon": "rizzoma.png"
+    "default_icon": "sidebar-icon.png"
   }, 
-  "background": {"page": "rizzoma-background.html"} ,
+  "background": {"page": "rizzoma-background.html"},
   "content_scripts": [
     {
       "matches": ["http://rizzoma.com/*", "https://rizzoma.com/*"],
