@@ -6,3 +6,25 @@ Damit nur eine benutzt werden muss statt den 2? vielleicht aber auch egal :)
 .js-wave-blips, .new-topic-guide {
             width: 510px;
 }
+
+.js-account-container + div {
+    position: relative;
+    top: -50px;
+    left: -400px;
+    z-index: 3;
+}
+
+.js-read-all {
+    display:none
+}
+
+.right-tools-panel button.next-unread-blip.disabled {
+    background: #B5BEC5;
+    border-color: #B5BEC5;
+}
+
+.right-tools-panel .next-unread-blip {
+    color: #fff;
+    font-weight: bold;
+    border: 1px solid #95D529;
+}
