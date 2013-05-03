@@ -19,8 +19,8 @@ Damit nur eine benutzt werden muss statt den 2? vielleicht aber auch egal :)
 }
 
 .right-tools-panel button.next-unread-blip.disabled {
-    background: #B5BEC5;
-    border-color: #B5BEC5;
+    background: none;
+    border: none;
 }
 
 .right-tools-panel .next-unread-blip {
