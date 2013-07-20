@@ -12,11 +12,18 @@ handleMessage = (messageString, sender, sendResponse) ->
         trackPageViewFromSidebarIFrame()
 
 handleNewURL = (url) ->
-    sessionStorage["sidebar.lastUrl"] = url
+    localStorage["sidebar.lastUrl"] = url
     
 handleGetCurrentSidebarURL = (sendResponseFunction) ->
-    url = sessionStorage["sidebar.lastUrl"]
+    url = getCurrentSidebarURL()
     sendResponseFunction(url)
+
+getCurrentSidebarURL = ->
+    if localStorage["sidebar.lastUrl"]?
+        return localStorage["sidebar.lastUrl"]
+    else
+        introductionTopicURL = 'https://rizzoma.com/topic/a8700fe865f677f7571d5b171c21492d/'
+        return introductionTopicURL
 
 trackPageViewFromSidebarIFrame = ->
     # this should work since google analytics already included by background page 
